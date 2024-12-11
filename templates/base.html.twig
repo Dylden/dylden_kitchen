@@ -44,7 +44,7 @@
 
 <main class="container my-5">
     {% for message in app.flashes('success') %}
-        <p class="bg-warning">{{ message }}</p>
+        <p class="bg-success">{{ message }}</p>
 
     {% endfor %}
     {% block body %}
