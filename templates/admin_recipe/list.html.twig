@@ -17,15 +17,17 @@
     <div class="example-wrapper">
 
         <h1>Liste des recettes</h1>
-
+<div class="d-flex">
         {% for recipe in recipe %}
-
+<div>
             <h2>{{ recipe.id }}</h2>
             <h2>{{ recipe.title }}</h2>
             <h2>{{ recipe.createdAt | date('d-m-Y')}}</h2>
-            <img src="{{ asset('assets/uploads/' ~ recipe.image) }}" alt="{{ recipe.title }}">
+            <div class="w-50"><img src="{{ asset('assets/uploads/' ~ recipe.image) }}" alt="{{ recipe.title }}"></div>
             <a href="{{ path('admin_delete_recipe',  {'id' : recipe.id}) }}" class="btn btn-danger">Supprimer</a>
+            <a href="{{ path('admin_update_recipe', {'id' : recipe.id}) }}" class="btn btn-primary">Modifier</a>
 
+</div>
 
 
 
