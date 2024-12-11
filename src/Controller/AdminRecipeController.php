@@ -20,12 +20,17 @@ class AdminRecipeController extends AbstractController
 
         $form = $this->createForm(AdminRecipeType::class, $recipes);
 
+
+        //Le handleRequest récupère les donées de POST (donc du form envoyé)
+        //pour chacune, il va modifier l'entité (setTitle, setImage etc.)
+        //et donc remplir l'entité avec les données du form
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-
             $entityManager->persist($recipes);
             $entityManager->flush();
+            $this->addFlash('success', 'La recette a été majestueusement ajouté messire !');
+
 
             return $this->redirectToRoute('admin_create_recipe');
         }
