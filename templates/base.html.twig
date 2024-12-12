@@ -32,9 +32,9 @@
                 </ul>
 
                 <!-- Search Form -->
-                <form class="d-flex" method="get" action="">
+                <form class="d-flex" method="get" action="{{ path('search_recipes') }}">
                     <input class="form-control me-2" type="search" name="search" placeholder="Rechercher..."
-                           aria-label="Rechercher" value="{{ app.request.query.get('search') }}">
+                           aria-label="Rechercher">
                     <button class="btn btn-outline-light" type="submit">Rechercher</button>
                 </form>
             </div>

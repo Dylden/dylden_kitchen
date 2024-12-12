@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Repository\RecipeRepository;
 use Doctrine\Migrations\AbstractMigration;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -20,7 +21,7 @@ class PublicRecipeController extends AbstractController
         ]);
     }
 
-    #[Route('/recipes/{id}', 'show_recipe')]
+    #[Route('/recipes/{id}', 'show_recipe', requirements: ['id' => '\d+'])]
     public function showRecipe(int $id, RecipeRepository $recipeRepository){
 
         $recipe = $recipeRepository->find($id);
@@ -33,5 +34,14 @@ class PublicRecipeController extends AbstractController
         return $this->render('public_recipe/show.html.twig', [
             'recipe' => $recipe
         ]);
+    }
+
+
+    #[Route('recipes/search', 'search_recipes')]
+    public function searchRecipes(Request $request){
+
+        $search = $request->get('search');
+
+        dd("jusqu'ici tout va bien chef");
     }
 }
