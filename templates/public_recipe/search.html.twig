@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello !{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+
+    <div class="example-wrapper">
+
+    <h1>Voici les résultats de votre somptueuse recherche chef !</h1>
+    <div class="d-flex">
+        {% for recipe in recipes %}
+            <div>
+                <p>{{ recipe.title }}</p>
+
+                <img width="100px" src="{{ asset('assets/uploads/' ~ recipe.image) }}" />
+                <a href="{{ path('show_recipe', {id: recipe.id}) }}">Voir la recette</a>
+            </div>
+
+
+
+        {% endfor %}
+
+    </div>
+{% endblock %}
