@@ -21,7 +21,7 @@ final class Version20241211102808 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE recipe ADD category_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE recipe ADD CONSTRAINT FK_DA88B13712469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
+        $this->addSql('ALTER TABLE recipe ADD CONSTRAINT FK_DA88B13712469DE2 FOREIGN KEY (category_id) REFERENCES categories (id)');
         $this->addSql('CREATE INDEX IDX_DA88B13712469DE2 ON recipe (category_id)');
     }
 

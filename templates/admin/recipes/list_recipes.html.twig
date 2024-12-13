@@ -1,0 +1,50 @@
+{% extends 'admin/base.html.twig' %}
+
+
+{% block title %}Hello !{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 800px;
+        width: 95%;
+        font: 18px/1.5 sans-serif;
+    }
+
+    .example-wrapper code {
+        background: #F5F5F5;
+        padding: 2px 6px;
+    }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3>Il y a {{ recipe | length }} recette(s) actuellement</h3>
+    <a href="{{ path('admin_create_recipe') }}" class="btn btn-primary">Ajouter une nouvelle recette</a>
+
+</div>
+
+<div class="example-wrapper">
+
+    <h1>Liste des recettes</h1>
+    <div class="d-flex">
+        {% for recipe in recipe %}
+            <div class="border bg-secondary mx-2">
+                <p>{{ recipe.id }}</p>
+                <h2>{{ recipe.title }}</h2>
+                <p>{{ recipe.createdAt | date('d-m-Y') }}</p>
+
+                <div class="w-50"><img src="{{ asset('assets/uploads/' ~ recipe.image) }}" alt="{{ recipe.title }}" class="w-25">
+                </div>
+                <a href="{{ path('admin_delete_recipe',  {'id' : recipe.id}) }}" class="btn btn-danger">Supprimer</a>
+                <a href="{{ path('admin_update_recipe', {'id' : recipe.id}) }}" class="btn btn-warning">Modifier</a>
+
+            </div>
+
+
+
+        {% endfor %}
+
+    </div>
+</div>
+    {% endblock %}

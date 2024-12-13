@@ -21,7 +21,7 @@ class Category
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'category')]
+    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'categories')]
     private Collection $recipes;
 
     public function __construct()
