@@ -12,16 +12,20 @@
     <h1>Liste des Admins :</h1>
 
 
-    {% for user in user %}
-    <h2>{{ user.id  }}</h2>
+    {% for user in users %}
+
+        <h2>ID : {{ user.id }}</h2>
         <h3>Rôles :</h3>
         <ul>
             {% for role in user.roles %}
                 <li>{{ role }}</li>
             {% endfor %}
         </ul>
-        <h2>{{ user.email  }}</h2>
+        <h2>Email : {{ user.email }}</h2>
+
+        <a href="{{ path('admin_delete_user', {'id': user.id}) }}" class="btn btn-danger">Supprimer</a>
     {% endfor %}
+
 
 
 
