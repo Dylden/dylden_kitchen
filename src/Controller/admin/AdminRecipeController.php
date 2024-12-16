@@ -5,6 +5,7 @@ namespace App\Controller\admin;
 use App\Entity\Recipe;
 use App\Form\AdminRecipeType;
 use App\Repository\RecipeRepository;
+use App\service\UniqueFilenameGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class AdminRecipeController extends AbstractController
 {
     #[Route('/admin/recipe/create', name: 'admin_create_recipe')]
-    public function createRecipe(Request $request, EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag): Response
+    public function createRecipe(Request $request, EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag, UniqueFilenameGenerator $filenameGenerator): Response
     {
 
         $recipes = new Recipe();
@@ -36,9 +37,11 @@ class AdminRecipeController extends AbstractController
             //s'il y a bien une image envoyée
             if ($recipeImage) {
 
+                $imageName = $recipeImage->getClientOriginalName();
+                $imageExtension = $recipeImage->getClientOriginalExtension();
                 //je génère un nom unique pour l'image, en gardant l'extension
                 //originale (.jpeg, .png etc)
-                $imageNewName = uniqid() . '.' . $recipeImage->guessExtension();
+                $imageNewName = $filenameGenerator->generateUniqueFilename($imageName, $imageExtension);
 
                 //je récupère grâce à la classe
                 $rootDir = $parameterBag->get('kernel.project_dir');
@@ -93,7 +96,7 @@ class AdminRecipeController extends AbstractController
     }
 
     #[Route('/admin/recipe/{id}/update', name: 'admin_update_recipe', requirements: ['id' => '\d+'])]
-    public function updateRecipe(int $id, Request $request, ParameterBagInterface $parameterBag, RecipeRepository $recipeRepository, EntityManagerInterface $entityManager): Response
+    public function updateRecipe(int $id, Request $request, ParameterBagInterface $parameterBag, RecipeRepository $recipeRepository, EntityManagerInterface $entityManager, UniqueFilenameGenerator $filenameGenerator): Response
     {
 
         $recipe = $recipeRepository->find($id);
@@ -112,9 +115,10 @@ class AdminRecipeController extends AbstractController
             //s'il y a bien une image envoyée
             if ($recipeImage) {
 
-                //je génère un nom unique pour l'image, en gardant l'extension
-                //originale (.jpeg, .png etc)
-                $imageNewName = uniqid() . '.' . $recipeImage->guessExtension();
+                $imageName = $recipeImage->getClientOriginalName();
+                $imageExtension = $recipeImage->getClientOriginalExtension();
+
+                $imageNewName = $filenameGenerator->generateUniqueFilename($imageName, $imageExtension);
 
                 //je récupère grâce à la classe
                 $rootDir = $parameterBag->get('kernel.project_dir');
